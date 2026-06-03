@@ -15,7 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            PriceRuleTypeSeeder::class,
+            PriceRuleSeeder::class,
+            PriceRuleTargetSeeder::class,
+            PriceRuleConditionSeeder::class,
+            PriceRuleActionSeeder::class,
+            PriceRuleCouponSeeder::class,
+            PriceRuleScheduleSeeder::class,
+        ]);
 
         User::factory()->create([
             'name' => 'Test User',

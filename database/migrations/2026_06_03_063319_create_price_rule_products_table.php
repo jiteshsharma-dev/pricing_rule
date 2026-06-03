@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('price_rule_conditions', function (Blueprint $table) {
+        Schema::create('price_rule_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('price_rule_id')->constrained('price_rules')->cascadeOnDelete();
-            $table->string('field', 100);
-            $table->enum('operator', ['=','!=','>','>=','<','<=','in','not_in','between','contains']);
-            $table->json('value');
-            $table->unsignedSmallInteger('sort_order')->default(1);
+            // $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->unsignedBigInteger('product_id');
+            $table->decimal('override_discount_value', 12, 4)->nullable();
             $table->timestamps();
-            $table->index(['price_rule_id','field'], 'idx_rule_field');
+            $table->unique(['price_rule_id', 'product_id'],'uq_rule_product');
+            $table->index('product_id');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('price_rule_conditions');
+        Schema::dropIfExists('price_rule_products');
     }
 };

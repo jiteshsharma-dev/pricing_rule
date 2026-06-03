@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('price_rule_conditions', function (Blueprint $table) {
+        Schema::create('price_rule_customer_groups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('price_rule_id')->constrained('price_rules')->cascadeOnDelete();
-            $table->string('field', 100);
-            $table->enum('operator', ['=','!=','>','>=','<','<=','in','not_in','between','contains']);
-            $table->json('value');
-            $table->unsignedSmallInteger('sort_order')->default(1);
+            $table->unsignedBigInteger('customer_group_id');
             $table->timestamps();
-            $table->index(['price_rule_id','field'], 'idx_rule_field');
+            $table->unique(['price_rule_id', 'customer_group_id'], 'uq_rule_custgroup');
+            $table->index('customer_group_id', 'idx_custgroup_rules');
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('price_rule_conditions');
+        Schema::dropIfExists('price_rule_customer_groups');
     }
 };

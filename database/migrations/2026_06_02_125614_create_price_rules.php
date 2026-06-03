@@ -11,34 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('price_rules', function (Blueprint $table) {
+        Schema::create('price_rules', function (Blueprint $table) {          
             $table->id();
-            $table->string('name');
+            $table->foreignId('rule_type_id')->constrained('price_rule_types')->restrictOnDelete();
+            $table->string('name', 255);
+            $table->string('slug', 255)->unique();
             $table->text('description')->nullable();
-            $table->enum('type', [
-                'product_discount',
-                'cart_discount',
-                'coupon',
-                'flash_sale',
-                'dynamic_pricing'
-            ]);
-            $table->boolean('status')->default(true);
-            $table->timestamp('start_at')->nullable();
-            $table->timestamp('end_at')->nullable();
-            $table->unsignedInteger('priority')->default(0);
-            $table->unsignedInteger('usage_limit')->nullable();
-            $table->unsignedInteger('per_customer_limit')->nullable();
+            $table->enum('status', ['draft','scheduled','active','expired'])->default('draft');
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
+            $table->unsignedSmallInteger('priority')->default(100);
             $table->boolean('stop_further_rules')->default(false);
-            $table->foreignId('created_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
+            $table->boolean('is_combinable')->default(true);
+            $table->boolean('coupon_required')->default(false);
+            $table->enum('condition_match', ['all','any'])->default('all');
+            $table->json('metadata')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->index('status');
-            $table->index(['status', 'start_at', 'end_at']);
-            $table->index('priority');
-            $table->index('code');
+            $table->index(['status','priority','starts_at','ends_at'], 'idx_rule_active_priority');
+            $table->index(['rule_type_id','status'], 'idx_rule_type_status');
         });
     }
 

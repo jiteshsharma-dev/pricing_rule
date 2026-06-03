@@ -13,25 +13,12 @@ return new class extends Migration
     {
         Schema::create('price_rule_targets', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('promotion_id')
-                ->constrained()
-                ->cascadeOnDelete();
-
-            $table->enum('target_type', [
-                'product',
-                'category',
-                'brand',
-                'customer_group',
-                'cart'
-            ]);
-
-            $table->unsignedBigInteger('target_id')->nullable();
-
+            $table->foreignId('price_rule_id')->constrained('price_rules')->cascadeOnDelete();
+            $table->string('target_type', 100);
+            $table->unsignedBigInteger('target_id');
             $table->timestamps();
-
-            $table->index(['target_type', 'target_id']);
-            $table->index('promotion_id');
+            $table->index(['target_type','target_id'], 'idx_target_lookup');
+            $table->index('price_rule_id', 'idx_rule_target');
         });
     }
 
