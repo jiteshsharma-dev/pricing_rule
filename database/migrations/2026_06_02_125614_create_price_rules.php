@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('slug', 255)->unique();
             $table->text('description')->nullable();
-            $table->enum('status', ['draft','scheduled','active','expired'])->default('draft');
+            // $table->enum('status', ['draft','scheduled','active','expired'])->default('draft');
+            $table->string('status', 30)->default('draft');
             $table->timestamp('starts_at')->nullable();
             $table->timestamp('ends_at')->nullable();
             $table->unsignedSmallInteger('priority')->default(100);
