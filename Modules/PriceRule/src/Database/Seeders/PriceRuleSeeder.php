@@ -1,8 +1,7 @@
 <?php
 
-namespace Database\Seeders;
+namespace Modules\PriceRule\Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -10,8 +9,10 @@ class PriceRuleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
         DB::table('price_rules')->insert([
            [
@@ -110,4 +111,4 @@ class PriceRuleSeeder extends Seeder
             ],
         ]);
     }
-}
+} 

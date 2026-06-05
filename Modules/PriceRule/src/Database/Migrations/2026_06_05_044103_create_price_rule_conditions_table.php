@@ -6,27 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('price_rule_actions', function (Blueprint $table) {
+        Schema::create('price_rule_conditions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('price_rule_id')->constrained('price_rules')->cascadeOnDelete();
-            $table->string('action_type', 100);
-            $table->json('configuration');
+            $table->string('field', 100);
+            $table->enum('operator', ['=','!=','>','>=','<','<=','in','not_in','between','contains']);
+            $table->json('value');
             $table->unsignedSmallInteger('sort_order')->default(1);
             $table->timestamps();
-            $table->index(['price_rule_id','action_type'], 'idx_rule_action');
+            $table->index(['price_rule_id','field'], 'idx_rule_field');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('price_rule_actions');
+        Schema::dropIfExists('price_rule_conditions');
     }
 };

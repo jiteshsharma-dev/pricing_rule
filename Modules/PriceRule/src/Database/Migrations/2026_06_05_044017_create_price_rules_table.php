@@ -6,12 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('price_rules', function (Blueprint $table) {          
+        Schema::create('price_rules', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rule_type_id')->constrained('price_rule_types')->restrictOnDelete();
             $table->string('name', 255);
@@ -34,9 +31,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('price_rules');
