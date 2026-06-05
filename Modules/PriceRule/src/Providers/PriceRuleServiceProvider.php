@@ -16,6 +16,11 @@ class PriceRuleServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+
+    //     $this->app->bind(
+    // \Modules\PriceRule\Repositories\Interfaces\PriceRuleRepositoryInterface::class,
+    // \Modules\PriceRule\Repositories\EloquentPriceRuleRepository::class
+    // );
         // Merge all module config files
         $this->registerModuleConfigs();
 
@@ -24,6 +29,8 @@ class PriceRuleServiceProvider extends ServiceProvider
         if (class_exists($eventProvider)) {
             $this->app->register($eventProvider);
         }
+
+        
     }
 
     /**
