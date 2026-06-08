@@ -11,10 +11,12 @@ class PriceRuleEvaluationService extends CoreBaseService
 {
    
    
- public function __construct(
+    public function __construct(
         private readonly PriceRuleRepository $priceRuleRepository
     ) {
     }
+
+    
 
     public function evaluate(array $context): array
     {

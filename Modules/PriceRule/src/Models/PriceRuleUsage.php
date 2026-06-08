@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PriceRuleUsage extends Model
 {
-    use HasFactory, SoftDeletes;
-
 
     protected $table = 'price_rule_usages';
 

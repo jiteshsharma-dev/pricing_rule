@@ -14,7 +14,6 @@ use Modules\PriceRule\Models\PriceRuleType;
 
 class PriceRule extends Model
 {
-    use HasFactory, SoftDeletes;
 
     protected $table = 'price_rules';
 

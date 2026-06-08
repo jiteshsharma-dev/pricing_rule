@@ -95,8 +95,8 @@ class PriceRuleRepository extends CoreBaseRepository
                 'products',
                 'categories',
                 'customerGroups',
-                'schedules',
-                'targets'
+                // 'schedules',
+                // 'targets'
             ])
             ->active()
             ->orderBy('priority')
